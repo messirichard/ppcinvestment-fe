@@ -93,7 +93,7 @@
                                 <h5 class="card-title text-center">Buy RoyalCoins</h5>
                                 <form action="{{ route('checkout.post') }}" method="POST" class="mb-3">
                                     @csrf
-                                    <p class="badge bg-warning">1 RoyalCoins = $5,000</p>
+                                    <p class="badge bg-warning">1 RoyalCoins = ${{ $price }}</p>
                                     <p class="badge bg-info">Use Solana wallet address</p>
 
                                     <div class="input-group mb-3">
@@ -141,7 +141,7 @@
     <!--- Hero Banner End--------->
     <!------------------------------>
 
-    {{-- <!------------------------------>
+    <!------------------------------>
     <!--- Service sectin Start------>
     <!------------------------------>
     <section class="service position-relative overflow-hidden">
@@ -685,7 +685,7 @@
     </section>
     <!------------------------------>
     <!-----Contact section End----->
-    <!------------------------------> --}}
+    <!------------------------------>
 
 
 
@@ -707,7 +707,7 @@
             usdAmountInput.value = formatNumber(usdAmount);
 
             // Calculate RoyalCoins
-            const conversionRate = 5000; // 1 RoyalCoin = $5000
+            const conversionRate = {{ $price }}; // 1 RoyalCoin = $5000
             const royalCoinAmount = (usdAmount / conversionRate).toFixed(4);
 
             document.getElementById('royalCoinAmount').value = royalCoinAmount;

@@ -6,8 +6,9 @@ use Stripe\Stripe;
 use App\Models\LeftToken;
 
 
-use App\Models\Transaction;
+use App\Models\TokenPrice;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Log;
@@ -98,6 +99,7 @@ class StripeController extends Controller
     private function calculateRoyalCoinAmount($usdAmount)
     {
         // Misalkan 1 RoyalCoin = $5000
-        return $usdAmount / 5000;
+        $price = TokenPrice::sum('price');
+        return $usdAmount / $price;
     }
 }
