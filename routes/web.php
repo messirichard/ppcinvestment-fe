@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,18 +14,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('landing');
-});
+Route::get('/', [TransactionController::class, 'showTotalLeftToken'])->name('transactions.buy');
+Route::get('/tx', [TransactionController::class, 'index'])->name('transactions.index');
 
 Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [StripeController::class, 'handleCheckout'])->name('checkout.post');
 
-Route::get('/checkout-success', function () {
-    return 'Payment successful! You will receive your RoyalCoins shortly.';
-})->name('checkout.success');
+Route::get('/checkout/success', [StripeController::class, 'checkoutSuccess'])->name('checkout.success');
+Route::get('/checkout/cancel', [StripeController::class, 'checkoutCancel'])->name('checkout.cancel');
 
-Route::get('/checkout-cancel', function () {
-    return 'Payment was cancelled.';
-})->name('checkout.cancel');

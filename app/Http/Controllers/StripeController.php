@@ -3,23 +3,18 @@
 namespace App\Http\Controllers;
 
 use Stripe\Stripe;
+use App\Models\LeftToken;
+
+
+use App\Models\Transaction;
+
 use Illuminate\Http\Request;
-
-
 use Stripe\Checkout\Session;
-
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 
 class StripeController extends Controller
 {
-    public function checkout()
-    {
-        return view('checkout');
-    }
-
     public function handleCheckout(Request $request)
     {
         // Validasi input
@@ -55,11 +50,54 @@ class StripeController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('checkout.success'),
+            'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('checkout.cancel'),
+            'metadata' => [
+                'wallet_address' => $request->wallet, // Menyimpan alamat wallet dalam metadata
+            ],
         ]);
 
         // Redirect ke halaman Stripe checkout
         return redirect($session->url);
+    }
+
+    public function checkoutSuccess(Request $request)
+    {
+        $sessionId = $request->query('session_id'); // Ambil session_id dari URL
+
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+
+        $amountTotal = $session->amount_total / 100; // Convert from cents to dollars
+        $royalCoinAmount = $this->calculateRoyalCoinAmount($amountTotal); // Implement this method
+
+        // Ambil alamat wallet dari metadata
+        $walletAddress = $session->metadata->wallet_address;
+
+        // Simpan transaksi ke database
+        Transaction::create([
+            'rcv_address' => $walletAddress,
+            'rcv_amount_token' => $royalCoinAmount,
+            'rcv_currency' => 'usd',
+            'rcv_amount_currency' => $amountTotal,
+        ]);
+
+        // Update tabel left_tokens
+        LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
+
+        return view('checkout.success'); // Tampilkan halaman sukses
+    }
+
+    public function checkoutCancel()
+    {
+        return view('checkout.cancel');
+    }
+
+    private function calculateRoyalCoinAmount($usdAmount)
+    {
+        // Misalkan 1 RoyalCoin = $5000
+        return $usdAmount / 5000;
     }
 }
