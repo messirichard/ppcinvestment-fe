@@ -149,28 +149,28 @@
                     <div class="card col-10">
                         <div class="card-body p-3 m-3">
                             <h5 class="card-title text-center">Buy RoyalCoins</h5>
-                            <form action="/checkout" method="POST" class="mb-3">
-                                <p class="badge bg-warning">1 Royalcoins = $151</p>
-                                <p class="badge bg-info">Use solana wallet address</p>
+                            <form action="{{ route('checkout.post') }}" method="POST" class="mb-3">
+                                @csrf
+                                <p class="badge bg-warning">1 RoyalCoins = $151</p>
+                                <p class="badge bg-info">Use Solana wallet address</p>
 
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-white"><i class="bi bi-wallet2"></i></span>
-                                    <input type="text" class="form-control" id="wallet" placeholder="Receive Address">
+                                    <input type="text" class="form-control" id="wallet" name="wallet" placeholder="Receive Address" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-white">$</span>
-                                    <input type="text" class="form-control" id="usdAmount" placeholder="Amount in USD" onkeyup="formatAndConvertToRoyalCoins()">
+                                    <input type="text" class="form-control" id="usdAmount" name="usdAmount" placeholder="Amount in USD" onkeyup="formatAndConvertToRoyalCoins()" required>
                                 </div>
-                                
+
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-white">R</span>
                                     <input type="text" class="form-control bg-white" id="royalCoinAmount" placeholder="RoyalCoins" readonly>
                                 </div>
-                                <input type="hidden" name="royalCoinAmount" id="hiddenRoyalCoinAmount"
-                                    value="0">
-                                <button type="submit" class="btn btn-warning btn-block w-100">Buy <span
-                                        id="royalCoinAmountDisplay">0</span> RoyalCoins</button>
+                                <input type="hidden" name="royalCoinAmount" id="hiddenRoyalCoinAmount" value="0">
+                                <button type="submit" class="btn btn-warning btn-block w-100">Buy <span id="royalCoinAmountDisplay">0</span> RoyalCoins</button>
                             </form>
+
                             <p class="mb-0">Powered by <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="" height="30"></p>
                         </div>
                     </div>
@@ -709,7 +709,7 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-   
+
     <script>
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

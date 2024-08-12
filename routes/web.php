@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landing');
 });
+
+Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [StripeController::class, 'handleCheckout'])->name('checkout.post');
+
+Route::get('/checkout-success', function () {
+    return 'Payment successful! You will receive your RoyalCoins shortly.';
+})->name('checkout.success');
+
+Route::get('/checkout-cancel', function () {
+    return 'Payment was cancelled.';
+})->name('checkout.cancel');
