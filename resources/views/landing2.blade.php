@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sasscandy</title>
+    <title>RoyalCoin - Buy Now Or Never</title>
     <link rel="stylesheet" href="/v2/assets/libs/OwlCarousel-2/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="/v2/dist/css/iconfont/tabler-icons.css">
     <link rel="stylesheet" href="/v2/dist/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="icon" href="/img/royalcoin.png">
+
 
 </head>
 
@@ -297,7 +299,7 @@
                             </p>
                         </div>
                         <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
-                            <a href="#" class="btn btn-warning btn-hover-secondery text-capitalize" disabled>Buy
+                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled" disabled>Buy
                                 Now</a>
                         </div>
                     </div>
@@ -317,7 +319,7 @@
 
                         </div>
                         <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
-                            <a href="#" class="btn btn-warning btn-hover-secondery text-capitalize" disabled>Buy
+                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled" disabled>Buy
                                 Now</a>
                         </div>
                     </div>
@@ -464,7 +466,7 @@
         <div class="container position-relative">
             <div class="row">
                 <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-                    <small class="fs-7 d-block text-warning">Buy Tokem Now</small>
+                    <small class="fs-7 d-block text-warning">Buy Token Now</small>
                     <h2 class="fs-3 text-white mb-0">Ready to take the oppurtunity?</h2>
                 </div>
                 <div class="card col-6" id="buy-royalcoins-card">
