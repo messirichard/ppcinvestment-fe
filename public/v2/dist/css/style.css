@@ -17,6 +17,12 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+
+ body {
+    zoom: 0.85; /* Set zoom level to 80% */
+}
+
 :root {
   --bs-blue: #001C68;
   --bs-indigo: #5243C2;
