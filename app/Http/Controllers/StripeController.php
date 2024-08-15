@@ -92,7 +92,13 @@ class StripeController extends Controller
         ]);
 
         // Update tabel left_tokens
-        LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
+
+        // Memeriksa apakah wallet address adalah '0x000F'
+        if ($walletAddress !== '0x000F') {
+            // Jika wallet address bukan '0x000F', maka kurangi left_token_amount
+            LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
+        }
+
 
         return view('checkout.success'); // Tampilkan halaman sukses
     }
