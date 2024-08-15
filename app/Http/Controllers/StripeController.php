@@ -37,9 +37,6 @@ class StripeController extends Controller
         // Set Stripe API Key
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // Mengatur nilai default untuk amount dalam cents
-        $usdAmountInCents = 1000; // Misalnya $10
-
         // Memeriksa apakah wallet address adalah '0x000F'
         if ($request->wallet === '0x000F') {
             // Jika benar, set harga menjadi $1 (100 cents)
