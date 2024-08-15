@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 d-flex justify-content-center">
                     <div class=" right-hero-color">
-                        <div class="card col-12" id="buy-royalcoins-card">
+                        <div class="card col-12">
                             <div class="card-body">
                                 <h5 class="card-title text-center">Buy RoyalCoins</h5>
                                 <form action="{{ route('checkout.post') }}" method="POST" class="mb-3">
