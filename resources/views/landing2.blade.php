@@ -83,7 +83,7 @@
                             Royal Coins is the future of digital currency.
                         </h1>
                         <p>The coins you love.</p>
-                        <a href="#" class="btn btn-warning btn-hover-secondery"><span
+                        <a href="/RoyalCoin_Whitepaper.pdf" class="btn btn-warning btn-hover-secondery"><span
                                 class="d-inline-block me-2"><i class="bi bi-cloud-download"></i></span> Download
                             Whitepaper</a>
                     </div>
