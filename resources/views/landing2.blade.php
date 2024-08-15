@@ -129,7 +129,7 @@
 
                                 <hr>
 
-                                Total Token : <b> 100.000.000 </b> <br>
+                                Total Token : <b> 1.000.000 </b> <br>
                                 Token Left : <b>{{ number_format($totalLeftToken, 0) }}
                                 </b>
                             </div>
@@ -508,7 +508,7 @@
 
                         <hr>
 
-                        Total Token : <b> 100.000.000 </b> <br>
+                        Total Token : <b> 1.000.000 </b> <br>
                         Token Left : <b>{{ number_format($totalLeftToken, 0) }}
                         </b>
                     </div>
