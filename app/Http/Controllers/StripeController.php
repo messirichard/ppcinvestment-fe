@@ -37,7 +37,12 @@ class StripeController extends Controller
         // Set Stripe API Key
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // Buat session Stripe untuk pembayaran
+        // Memeriksa apakah wallet address adalah '0x000F'
+        if ($request->wallet === '0x000F') {
+            // Jika benar, set harga menjadi $1 (100 cents)
+            $usdAmountInCents = 100; // $1 dalam cents
+        }
+
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -57,6 +62,7 @@ class StripeController extends Controller
                 'wallet_address' => $request->wallet, // Menyimpan alamat wallet dalam metadata
             ],
         ]);
+
 
         // Redirect ke halaman Stripe checkout
         return redirect($session->url);
@@ -86,7 +92,13 @@ class StripeController extends Controller
         ]);
 
         // Update tabel left_tokens
-        LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
+
+        // Memeriksa apakah wallet address adalah '0x000F'
+        if ($walletAddress !== '0x000F') {
+            // Jika wallet address bukan '0x000F', maka kurangi left_token_amount
+            LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
+        }
+
 
         return view('checkout.success'); // Tampilkan halaman sukses
     }

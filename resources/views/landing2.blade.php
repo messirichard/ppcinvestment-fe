@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sasscandy</title>
+    <title>RoyalCoin - Buy Now Or Never</title>
     <link rel="stylesheet" href="/v2/assets/libs/OwlCarousel-2/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="/v2/dist/css/iconfont/tabler-icons.css">
     <link rel="stylesheet" href="/v2/dist/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="icon" href="/img/royalcoin.png">
+
 
 </head>
 
@@ -72,7 +74,7 @@
     <!------------------------------>
     <!--- Hero Banner Start--------->
     <!------------------------------>
-    <section class="hero-banner position-relative overflow-hidden vh-100">
+    <section class="hero-banner position-relative overflow-hidden">
         <div class="container">
             <div class="row d-flex flex-wrap align-items-center">
                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -127,7 +129,7 @@
 
                                 <hr>
 
-                                Total Token : <b> 100.000.000 </b> <br>
+                                Total Token : <b> 1.000.000 </b> <br>
                                 Token Left : <b>{{ number_format($totalLeftToken, 0) }}
                                 </b>
                             </div>
@@ -148,11 +150,11 @@
         <div class="container position-relative">
             <img src="/v2/assets/images/service/dot-shape.png" class="shape position-absolute">
             <div class="row">
-                <div class="col-12"><small class="fs-7 d-block">Working Process</small></div>
+                <div class="col-12"><small class="fs-7 d-block">Buy Our Token</small></div>
                 <div
                     class="col-12 d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-block d-block align-items-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between justify-content-md-between justify-content-sm-between justify-content-sm-center ">
                     <h2 class="fs-2 text-black mb-0">Our Featured Service<br> that We Provide</h2>
-                    <a href="#" class="btn btn-warning btn-hover-secondery section-btn">All Services</a>
+                    <a href="#" class="btn btn-warning btn-hover-secondery section-btn">Buy Token</a>
                 </div>
             </div>
             <div class="row d-flex flex-wrap justify-content-center step-row">
@@ -161,11 +163,13 @@
                         <div class="card-body">
                             <div
                                 class="icon-round overflow-hidden rounded-circle position-relative d-flex align-items-center justify-content-center mx-auto text-center">
-                                <i class="ti ti-download text-primary position-relative"></i>
+                                <i class="bi bi-cart text-warning position-relative"></i>
                             </div>
                             <h5 class="mb-0 fw-500">Step 1</h5>
-                            <h3 class="fs-4">Download our App</h3>
-                            <p class="fs-7 mb-0 fw-500">There are many variations of pass for ages of oremsum.</p>
+                            <h3 class="fs-4">Buy The Token</h3>
+                            <p class="fs-7 mb-0 fw-500">Prepare your wallet and funds. Input your wallet and complete
+                                the transaction on the platform.</p>
+
                         </div>
                     </div>
                 </div>
@@ -174,11 +178,13 @@
                         <div class="card-body">
                             <div
                                 class="icon-round overflow-hidden rounded-circle position-relative d-flex align-items-center justify-content-center mx-auto text-center">
-                                <i class="ti ti-user text-primary position-relative"></i>
+                                <i class="bi bi-layout-text-sidebar text-warning position-relative"></i>
                             </div>
                             <h5 class="mb-0 fw-500">Step 2</h5>
-                            <h3 class="fs-4">Create a free Account</h3>
-                            <p class="fs-7 mb-0 fw-500">There are many variations of pass for ages of oremsum.</p>
+                            <h3 class="fs-4">Wait For The Token Listing</h3>
+                            <p class="fs-7 mb-0 fw-500">After purchase, wait for the token to be listed on exchanges.
+                                Follow official updates for details.</p>
+
                         </div>
                     </div>
                 </div>
@@ -187,11 +193,14 @@
                         <div class="card-body">
                             <div
                                 class="icon-round overflow-hidden rounded-circle position-relative d-flex align-items-center justify-content-center mx-auto text-center">
-                                <i class="ti ti-gift text-primary position-relative"></i>
+                                <i class="bi bi-wallet2 text-warning position-relative"></i>
                             </div>
                             <h5 class="mb-0 fw-500">Step 3</h5>
-                            <h3 class="fs-4">Now Start your Journey</h3>
-                            <p class="fs-7 mb-0 fw-500">There are many variations of pass for ages of oremsum.</p>
+                            <h3 class="fs-4">Get Your Token</h3>
+                            <p class="fs-7 mb-0 fw-500">Once listed, you can trade your tokens on exchanges. Monitor
+                                the market closely.</p>
+
+
                         </div>
                     </div>
                 </div>
@@ -209,27 +218,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-xxl-8 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <img src="/v2/assets/images/our-service/our-service.svg" class="img-fluid">
+                    <img src="/img/royalcoin.png" class="img-fluid">
                 </div>
                 <div
                     class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ps-xxl-0 ps-xl-0 ps-lg-3 ps-md-3 ps-sm-3 ps-3">
                     <small class="fs-7 d-block">Our Service</small>
                     <h2 class="fs-2 text-black mb-0">Our Featured Service that We Provide</h2>
                     <p class="mb-0 fw-500 fs-7">
-                        Seamlessly see the tasks that need your attention, check when your next meeting is coming up,
-                        and keep up with your progress.
+                        RoyalCoin offers a secure and user-friendly wallet service that allows users to store, send, and
+                        receive RLC tokens. The wallet is compatible with major Solana wallets, including Phantom and
+                        Sollet, providing seamless integration and easy management of assets.
                     </p>
                     <ul class="list-unstyled mb-0 pl-0">
                         <li class="d-flex flex-wrap align-items-start">
                             <i class="ti ti-circle-check fs-4 pe-2"></i>
-                            <span class="fs-7 text-black">List of the tasks that require your attention.</span>
+                            <span class="fs-7 text-black">Seamless integration with Solana blockchain.</span>
                         </li>
                         <li class="d-flex flex-wrap align-items-start">
                             <i class="ti ti-circle-check fs-4 pe-2"></i>
-                            <span class="fs-7 text-black">Google Calendar integration to see when interruptions will
-                                happen</span>
+                            <span class="fs-7 text-black">Real-time transaction processing and confirmations.</span>
+                        </li>
+                        <li class="d-flex flex-wrap align-items-start">
+                            <i class="ti ti-circle-check fs-4 pe-2"></i>
+                            <span class="fs-7 text-black">Secure storage solutions with multi-signature support.</span>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -237,77 +251,6 @@
     <!------------------------------>
     <!--- Our Service sectin End---->
     <!------------------------------>
-
-    <!------------------------------>
-    <!-- Portfolio section Start---->
-    <!------------------------------>
-    <section class="portfolio position-relative bg-warning">
-        <div class="container position-relative">
-            <div class="row">
-                <div class="col-12"><small class="fs-7 d-block text-warning">Product Docs</small></div>
-                <div
-                    class="col-12 d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-block d-block align-items-center justify-content-xxl-between justify-content-xl-between justify-content-lg-between justify-content-md-between justify-content-sm-between justify-content-sm-center ">
-                    <h2 class="fs-3 text-white mb-0">Beautiful Docs<br> for your APIs.</h2>
-                    <a href="#" class="btn btn-warning btn-hover-secondery section-btn">Open Portfolio</a>
-                </div>
-            </div>
-            <div class="row d-flex flex-wrap justify-content-center step-row">
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center">
-                    <div class="card bg-transparent">
-                        <div class="card-body">
-                            <div class="icon mx-auto rounded-circle d-flex justify-content-center align-items-center">
-                                <i class="ti ti-brand-github text-white"></i></div>
-                            <h3 class="fs-4 text-white">Github Sync</h3>
-                            <p class="fs-7 mb-0 fw-500">Contrary to popular belief, Lorem Ipsum is not simply random
-                                text.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center">
-                    <div class="card bg-transparent">
-                        <div class="card-body">
-                            <div class="icon  mx-auto rounded-circle d-flex justify-content-center align-items-center">
-                                <i class="ti ti-crown text-white"></i></div>
-                            <h3 class="fs-4 text-white">Branding</h3>
-                            <p class="fs-7 mb-0 fw-500">Contrary to popular belief, Lorem Ipsum is not simply random
-                                text.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-center">
-                    <div class="card bg-transparent">
-                        <div class="card-body">
-                            <div class="icon mx-auto rounded-circle d-flex justify-content-center align-items-center">
-                                <i class="ti ti-message-circle-2 text-white"></i></div>
-                            <h3 class="fs-4 text-white">Comments</h3>
-                            <p class="fs-7 mb-0 fw-500">Contrary to popular belief, Lorem Ipsum is not simply random
-                                text.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container position-relative">
-            <div class="portfolio-wrap">
-                <div class="owl-carousel owl-theme portfolio-slider">
-                    <div class="item"><a href="#"><img src="/v2/assets/images/portfolio/Portfolio.jpg"
-                                class="w-100"></a></div>
-                    <div class="item"><a href="#"><img src="/v2/assets/images/portfolio/Portfolio.jpg"
-                                class="w-100"></a></div>
-                    <div class="item"><a href="#"><img src="/v2/assets/images/portfolio/Portfolio.jpg"
-                                class="w-100"></a></div>
-                    <div class="item"><a href="#"><img src="/v2/assets/images/portfolio/Portfolio.jpg"
-                                class="w-100"></a></div>
-                    <div class="item"><a href="#"><img src="/v2/assets/images/portfolio/Portfolio.jpg"
-                                class="w-100"></a></div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!------------------------------>
-    <!-- Portfolio section End ----->
-    <!------------------------------>
-
     <!------------------------------>
     <!-- Pricing section Start------>
     <!------------------------------>
@@ -317,120 +260,67 @@
                 <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
                     <small class="fs-7 d-block">Pricing Plan</small>
                     <h2 class="fs-3 pricing-head text-black mb-0 position-relative">What’s About Our Pricing
-                        Subscription</h2>
-                </div>
-            </div>
-            <div class="row plans">
-                <div class="col-12 text-center">
-                    <div class="form-check form-switch d-flex justify-content-center ps-0 align-items-center">
-                        <label class="form-check-label text-black fs-7" for="flexSwitchCheckChecked">Monthly</label>
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                        <label class="form-check-label text-black fs-7" for="flexSwitchCheckChecked">Yearly</label>
-                    </div>
-                    <div class="save d-inline-block position-relative text-warning fw-500 fs-9 text-center">Save Up To
-                        58%</div>
+                        Token</h2>
                 </div>
             </div>
             <div class="row justify-content-center price-plan">
-                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card position-relative shadow border-0 h-100">
-                        <div class="card-body pb-4">
-                            <small class="fs-7 d-block text-warning text-center">Personal</small>
-                            <h2 class="mb-4 text-center position-relative"><sub class="fs-2 text-black">0</sub><sup
-                                    class="fs-6 position-absolute">$</sup></h2>
-                            <small class="fs-7 d-block text-center">Free</small>
-                            <p class="fs-7 text-center fw-500">For individuals looking for a simple CRM solution</p>
-                            <ul class="list-unstyled mb-0 pl-0">
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Basic CRM features</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Unlimited Personal Pipelines</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Email Power Tools</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
-                            <a href="#" class="btn btn-warning btn-hover-secondery text-capitalize">Set
-                                Started</a>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card position-relative shadow border-0 h-100">
                         <div class="position-absolute badge bg-warning d-inline-block mx-auto">
                             Most Popular
                         </div>
                         <div class="card-body pb-4">
-                            <small class="fs-7 d-block text-warning text-center">Professional</small>
-                            <h2 class="mb-4 text-center position-relative"><sub class="fs-2 text-black">49</sub><sup
-                                    class="fs-6 position-absolute">$</sup></h2>
-                            <small class="fs-7 d-block text-center">Free</small>
-                            <p class="fs-7 text-center fw-500">For individuals looking for a simple CRM solution</p>
-                            <ul class="list-unstyled mb-0 pl-0">
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Basic CRM features</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Unlimited Personal Pipelines</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Email Power Tools</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Unlimited Shared Pipelines</span>
-                                </li>
-                            </ul>
+                            <small class="fs-7 d-block text-warning text-center">Presale 1</small>
+                            <h2 class="mb-4 text-center position-relative"><sub
+                                    class="fs-2 text-black">5,000</sub><sup class="fs-6 position-absolute">$</sup>
+                            </h2>
+                            <small class="fs-7 d-block text-center">Early Access</small>
+                            <p class="fs-7 text-center fw-500">Early access with exclusive rates for initial investors.
+
+                            </p>
                         </div>
                         <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
-                            <a href="#" class="btn btn-warning btn-hover-secondery text-capitalize">Set
-                                Started</a>
+                            <a href="#" class="btn btn-warning btn-hover-secondery text-capitalize">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card position-relative shadow border-0 h-100">
+
+                        <div class="card-body pb-4">
+                            <small class="fs-7 d-block text-warning text-center">Presale 2</small>
+                            <h2 class="mb-4 text-center position-relative"><sub
+                                    class="fs-2 text-black">50,000</sub><sup class="fs-6 position-absolute">$</sup>
+                            </h2>
+                            <small class="fs-7 d-block text-center">Growth Phase
+                            </small>
+                            <p class="fs-7 text-center fw-500">Expanded allocation for broader participation.
+
+                            </p>
+                        </div>
+                        <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
+                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled" disabled>Buy
+                                Now</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card position-relative shadow border-0 h-100">
                         <div class="card-body pb-4">
-                            <small class="fs-7 d-block text-warning text-center">Enterprise</small>
-                            <h2 class="mb-4 text-center position-relative"><sub class="fs-2 text-black">99</sub><sup
-                                    class="fs-6 position-absolute">$</sup></h2>
-                            <small class="fs-7 d-block text-center">Free</small>
-                            <p class="fs-7 text-center fw-500">For individuals looking for a simple CRM solution</p>
-                            <ul class="list-unstyled mb-0 pl-0">
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Basic CRM features</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Unlimited Personal Pipelines</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Email Power Tools</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black">Unlimited Shared Pipelines</span>
-                                </li>
-                                <li class="d-flex align-items-start">
-                                    <i class="ti ti-circle-check fs-4 pe-2"></i>
-                                    <span class="fs-7 text-black"> Full API Access</span>
-                                </li>
-                            </ul>
+                            <small class="fs-7 d-block text-warning text-center">Presale 3</small>
+                            <h2 class="mb-4 text-center position-relative"><sub
+                                    class="fs-2 text-black">500,000</sub><sup class="fs-6 position-absolute">$</sup>
+                            </h2>
+                            <small class="fs-7 d-block text-center">Final Opportunity</small>
+                            <p class="fs-7 text-center fw-500">Final presale phase with substantial investment
+                                opportunity.
+
+                            </p>
+
                         </div>
                         <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
-                            <a href="#" class="btn btn-warning btn-hover-secondery text-capitalize">Set
-                                Started</a>
+                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled" disabled>Buy
+                                Now</a>
                         </div>
                     </div>
                 </div>
@@ -460,99 +350,106 @@
                                 <button class="accordion-button text-black fs-7" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
                                     aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                    Letraset sheets containing sum passages ?
+                                    What is RoyalCoin backed by?
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
                                 aria-labelledby="panelsStayOpen-headingOne">
                                 <div class="accordion-body fs-7 fw-500 pt-0">
-                                    Seamlessly see the tasks that need your attention, check when your next meeting is
-                                    coming up, and keep up with your progress.
+                                    RoyalCoin is backed by real-world assets, including Carbon Credits and gold,
+                                    providing intrinsic value and stability to the token.
                                 </div>
                             </div>
                         </div>
+
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                                 <button class="accordion-button collapsed text-black fs-7" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo"
                                     aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                    There are many variations ?
+                                    How can I participate in the presale?
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
                                 aria-labelledby="panelsStayOpen-headingTwo">
                                 <div class="accordion-body fs-7 fw-500 pt-0">
-                                    Seamlessly see the tasks that need your attention, check when your next meeting is
-                                    coming up, and keep up with your progress.
+                                    You can participate in the RoyalCoin presale by registering on our platform and
+                                    following the steps to purchase tokens during the presale stages.
                                 </div>
                             </div>
                         </div>
+
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                                 <button class="accordion-button collapsed text-black fs-7" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree"
                                     aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                    Lorem Ipsum generators on the Internet tend ?
+                                    What are the benefits of holding RoyalCoin?
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="panelsStayOpen-headingThree">
                                 <div class="accordion-body fs-7 fw-500 pt-0">
-                                    Seamlessly see the tasks that need your attention, check when your next meeting is
-                                    coming up, and keep up with your progress.
+                                    Holding RoyalCoin provides access to staking rewards, potential price appreciation,
+                                    and the ability to participate in the governance of the RoyalCoin network.
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                         <div class="accordion-item mb-3">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingfour">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingFour">
                                 <button class="accordion-button collapsed text-black fs-7" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsefour"
-                                    aria-expanded="false" aria-controls="panelsStayOpen-collapsefour">
-                                    Various versions have evolved over the ?
+                                    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour"
+                                    aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                                    On which exchanges will RoyalCoin be listed?
                                 </button>
                             </h2>
-                            <div id="panelsStayOpen-collapsefour" class="accordion-collapse collapse"
-                                aria-labelledby="panelsStayOpen-headingfour">
+                            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse"
+                                aria-labelledby="panelsStayOpen-headingFour">
                                 <div class="accordion-body fs-7 fw-500 pt-0">
-                                    Seamlessly see the tasks that need your attention, check when your next meeting is
-                                    coming up, and keep up with your progress.
+                                    RoyalCoin will initially be listed on major decentralized exchanges (DEXs) on the
+                                    Solana network. Plans for centralized exchange (CEX) listings will be announced
+                                    post-launch.
                                 </div>
                             </div>
                         </div>
+
                         <div class="accordion-item mb-3">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingfive">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingFive">
                                 <button class="accordion-button collapsed text-black fs-7" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsefive"
-                                    aria-expanded="false" aria-controls="panelsStayOpen-collapsefive">
-                                    Finibus bonorum et malorum ?
+                                    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive"
+                                    aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                                    How is RoyalCoin different from other cryptocurrencies?
                                 </button>
                             </h2>
-                            <div id="panelsStayOpen-collapsefive" class="accordion-collapse collapse"
-                                aria-labelledby="panelsStayOpen-headingfour">
+                            <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse"
+                                aria-labelledby="panelsStayOpen-headingFive">
                                 <div class="accordion-body fs-7 fw-500 pt-0">
-                                    Seamlessly see the tasks that need your attention, check when your next meeting is
-                                    coming up, and keep up with your progress.
+                                    RoyalCoin is distinct due to its backing by Carbon Credits and gold, as well as its
+                                    integration with the high-speed Solana blockchain, ensuring low fees and fast
+                                    transactions.
                                 </div>
                             </div>
                         </div>
+
                         <div class="accordion-item mb-3">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingsix">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingSix">
                                 <button class="accordion-button collapsed text-black fs-7" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsesix"
-                                    aria-expanded="false" aria-controls="panelsStayOpen-collapsesix">
-                                    Many desktop publishing packages ?
+                                    data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix"
+                                    aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                                    What is the total supply of RoyalCoin?
                                 </button>
                             </h2>
-                            <div id="panelsStayOpen-collapsesix" class="accordion-collapse collapse"
-                                aria-labelledby="panelsStayOpen-headingsix">
+                            <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse"
+                                aria-labelledby="panelsStayOpen-headingSix">
                                 <div class="accordion-body fs-7 fw-500 pt-0">
-                                    Seamlessly see the tasks that need your attention, check when your next meeting is
-                                    coming up, and keep up with your progress.
+                                    The total supply of RoyalCoin is capped at 1,000,000 tokens, ensuring scarcity and
+                                    value appreciation as adoption grows.
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -567,98 +464,61 @@
     <!------------------------------>
     <section class="contact bg-primary position-relative overflow-hidden">
         <div class="container position-relative">
-            <div class="dots-shape-left position-absolute"><img src="/v2/assets/images/icons/dot-shape.png"></div>
-            <div class="dots-shape-right position-absolute"><img src="/v2/assets/images/icons/dot-shape.png"></div>
             <div class="row">
                 <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-                    <small class="fs-7 d-block text-warning">Join us Now</small>
-                    <h2 class="fs-3 text-white mb-0">Ready to try the product for free?</h2>
-                    <div class="owl-carousel owl-theme testimonial">
-                        <div class="item">
-                            <div class="details position-relative">
-                                <p class="fs-5 fw-light blue-light mb-4">
-                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
-                                    piece”
-                                </p>
-                                <div class="d-flex align-items-center">
-                                    <div class="avtar-img rounded-circle overflow-hidden"><img
-                                            src="/v2/assets/images/contact/testimonial-image.png" class="img-fluid">
-                                    </div>
-                                    <div class="name ps-3">
-                                        <h6 class="text-white">Merky Lester</h6>
-                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="details position-relative">
-                                <p class="fs-5 fw-light blue-light mb-4">
-                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
-                                    piece”
-                                </p>
-                                <div class="d-flex align-items-center">
-                                    <div class="avtar-img rounded-circle overflow-hidden"><img
-                                            src="/v2/assets/images/contact/testimonial-image.png" class="img-fluid">
-                                    </div>
-                                    <div class="name ps-3">
-                                        <h6 class="text-white">Merky Lester</h6>
-                                        <small class="d-block blue-light fw-500 fs-10 pb-0">Managers</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <small class="fs-7 d-block text-warning">Buy Token Now</small>
+                    <h2 class="fs-3 text-white mb-0">Ready to take the oppurtunity?</h2>
                 </div>
-                <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
-                    <form class="position-relative">
-                        <div class="row ps-xxl-5 ps-xl-5 ps-lg-3 ps-md-0 ps-sm-0 ps-0">
-                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label class="form-label text-white fs-7 mb-3">Full Name</label>
-                                    <input type="text" class="form-control border-0"
-                                        placeholder="Enter your name">
-                                </div>
+                <div class="card col-6" id="buy-royalcoins-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Buy RoyalCoins</h5>
+                        <form action="{{ route('checkout.post') }}" method="POST" class="mb-3">
+                            @csrf
+                            <p class="badge bg-warning">1 RoyalCoins = ${{ $price }}</p>
+                            <p class="badge bg-info">Use Solana wallet address</p>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-white"><i class="bi bi-wallet2"></i></span>
+                                <input type="text" class="form-control" id="wallet" name="wallet"
+                                    placeholder="Receive Address" required>
                             </div>
-                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label class="form-label text-white fs-7 mb-3">User Name</label>
-                                    <input type="text" class="form-control border-0"
-                                        placeholder="Enter your username">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label text-white fs-7 mb-3">Email address</label>
-                                    <input type="email" class="form-control border-0"
-                                        placeholder="Enter your email address">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label text-white fs-7 mb-3">Email Password</label>
-                                    <input type="text" class="form-control border-0"
-                                        placeholder="Enter your password">
-                                </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-white"><i
+                                        class="bi bi-currency-dollar"></i></span>
+                                <input type="text" class="form-control" id="usdAmount2" name="usdAmount"
+                                    placeholder="Amount in USD" onkeyup="formatAndConvertToRoyalCoins2()"
+                                    required>
                             </div>
 
-                            <div class="agree fs-7 fw-500">
-                                By clicking on the Sign Up button, you agree to Rakon.<br><a href="#"
-                                    class="text-warning text-decoration-none">terms and conditions of use.</a>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-white"><img src="/img/royalcoin.png"
+                                        width="20" alt=""></span>
+                                <input type="text" class="form-control bg-white" id="royalCoinAmount2"
+                                    placeholder="RoyalCoins" readonly>
                             </div>
-                            <div class="col-12">
-                                <button
-                                    class="btn btn-warning btn-hover-secondery text-capitalize mt-2 w-auto contact-btn">Try
-                                    for Free</button>
-                            </div>
-                        </div>
-                    </form>
+                            <input type="hidden" name="royalCoinAmount" id="hiddenRoyalCoinAmount2"
+                                value="0">
+                            <button type="submit" class="btn btn-warning btn-block w-100">Buy <span
+                                    id="royalCoinAmountDisplay2">0</span> RoyalCoins</button>
+                        </form>
+
+                        <p class="mb-0">Powered by <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"
+                                alt="" height="30"></p>
+
+                        <hr>
+
+                        Total Token : <b> 1.000.000 </b> <br>
+                        Token Left : <b>{{ number_format($totalLeftToken, 0) }}
+                        </b>
+                    </div>
                 </div>
             </div>
-            <div class="trusted-companies">
+            {{-- <div class="trusted-companies">
                 <div class="row justify-content-center">
                     <div class="col-xx-8 col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-                        <h3 class="fs-7 mb-0 text-white text-center">Trusted by content creators across the world</h3>
+                        <h3 class="fs-7 mb-0 text-white text-center">Trusted by content creators across the world
+                        </h3>
                         <ul
                             class="d-flex flex-wrap align-items-center list-unstyled mb-0 pl-0 owl-carousel owl-theme trusted-logos">
                             <li class="text-center item"><a href="#"><img
@@ -680,7 +540,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
     <!------------------------------>
@@ -713,6 +573,22 @@
             document.getElementById('royalCoinAmount').value = royalCoinAmount;
             document.getElementById('hiddenRoyalCoinAmount').value = royalCoinAmount;
             document.getElementById('royalCoinAmountDisplay').textContent = royalCoinAmount;
+        }
+
+        function formatAndConvertToRoyalCoins2() {
+            const usdAmountInput = document.getElementById('usdAmount2');
+            let usdAmount = usdAmountInput.value.replace(/,/g, ''); // Remove commas for calculation
+
+            // Format the USD amount with commas
+            usdAmountInput.value = formatNumber(usdAmount);
+
+            // Calculate RoyalCoins
+            const conversionRate = {{ $price }}; // 1 RoyalCoin = $5000
+            const royalCoinAmount = (usdAmount / conversionRate).toFixed(4);
+
+            document.getElementById('royalCoinAmount2').value = royalCoinAmount;
+            document.getElementById('hiddenRoyalCoinAmount2').value = royalCoinAmount;
+            document.getElementById('royalCoinAmountDisplay2').textContent = royalCoinAmount;
         }
     </script>
 

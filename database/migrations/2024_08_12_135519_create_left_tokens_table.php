@@ -18,6 +18,7 @@ class CreateLeftTokensTable extends Migration
             $table->decimal('left_token_amount', 20, 8);
             $table->timestamps();
         });
+
     }
 
     /**
