@@ -18,89 +18,98 @@ class StripeController extends Controller
 {
     public function handleCheckout(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'wallet' => 'required|string',
-            'usdAmount' => 'required|string',
-            'royalCoinAmount' => 'required|numeric|min:1',
-        ]);
+        try {
+            // Validasi input
+            $request->validate([
+                'wallet' => 'required|string',
+                'usdAmount' => 'required|string',
+                'royalCoinAmount' => 'required|numeric',
+            ]);
 
-        // Membersihkan input dari karakter koma
-        $usdAmount = str_replace(',', '', $request->usdAmount);
+            // Membersihkan input dari karakter koma
+            $usdAmount = str_replace(',', '', $request->usdAmount);
 
-        // Konversi ke float untuk memastikan jumlah dalam format angka
-        $usdAmount = (float)$usdAmount;
+            // Konversi ke float untuk memastikan jumlah dalam format angka
+            $usdAmount = (float)$usdAmount;
 
-        // Konversi ke cents (Stripe bekerja dengan cents)
-        $usdAmountInCents = $usdAmount * 100;
+            // Konversi ke cents (Stripe bekerja dengan cents)
+            $usdAmountInCents = $usdAmount * 100;
 
-        // Set Stripe API Key
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+            // Set Stripe API Key
+            Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // Memeriksa apakah wallet address adalah '0x000F'
-        if ($request->wallet === '0x000F') {
-            // Jika benar, set harga menjadi $1 (100 cents)
-            $usdAmountInCents = 100; // $1 dalam cents
-        }
+            // Memeriksa apakah wallet address adalah '0x000F'
+            if ($request->wallet === '0x000F') {
+                // Jika benar, set harga menjadi $1 (100 cents)
+                $usdAmountInCents = 100; // $1 dalam cents
+            }
 
-        $session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => 'RoyalCoins',
+            $session = Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => 'RoyalCoins',
+                        ],
+                        'unit_amount' => $usdAmountInCents, // Harga dalam cents
                     ],
-                    'unit_amount' => $usdAmountInCents, // Harga dalam cents
+                    'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('checkout.cancel'),
+                'metadata' => [
+                    'wallet_address' => $request->wallet, // Menyimpan alamat wallet dalam metadata
                 ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('checkout.cancel'),
-            'metadata' => [
-                'wallet_address' => $request->wallet, // Menyimpan alamat wallet dalam metadata
-            ],
-        ]);
+            ]);
 
+            // Redirect ke halaman Stripe checkout
+            return redirect($session->url);
 
-        // Redirect ke halaman Stripe checkout
-        return redirect($session->url);
+        } catch (\Exception $e) {
+            // Tangkap error dan tampilkan halaman error
+            return view('errors.payment_error', ['message' => $e->getMessage()]);
+        }
     }
 
     public function checkoutSuccess(Request $request)
     {
-        $sessionId = $request->query('session_id'); // Ambil session_id dari URL
+        try {
+            $sessionId = $request->query('session_id'); // Ambil session_id dari URL
 
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $session = \Stripe\Checkout\Session::retrieve($sessionId);
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
 
+            $amountTotal = $session->amount_total / 100; // Convert from cents to dollars
+            $royalCoinAmount = $this->calculateRoyalCoinAmount($amountTotal); // Implement this method
 
-        $amountTotal = $session->amount_total / 100; // Convert from cents to dollars
-        $royalCoinAmount = $this->calculateRoyalCoinAmount($amountTotal); // Implement this method
+            // Ambil alamat wallet dari metadata
+            $walletAddress = $session->metadata->wallet_address;
 
-        // Ambil alamat wallet dari metadata
-        $walletAddress = $session->metadata->wallet_address;
+            // Simpan transaksi ke database
+            Transaction::create([
+                'rcv_address' => $walletAddress,
+                'rcv_amount_token' => $royalCoinAmount,
+                'rcv_currency' => 'usd',
+                'rcv_amount_currency' => $amountTotal,
+            ]);
 
-        // Simpan transaksi ke database
-        Transaction::create([
-            'rcv_address' => $walletAddress,
-            'rcv_amount_token' => $royalCoinAmount,
-            'rcv_currency' => 'usd',
-            'rcv_amount_currency' => $amountTotal,
-        ]);
+            // Update tabel left_tokens
 
-        // Update tabel left_tokens
+            // Memeriksa apakah wallet address adalah '0x000F'
+            if ($walletAddress !== '0x000F') {
+                // Jika wallet address bukan '0x000F', maka kurangi left_token_amount
+                LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
+            }
 
-        // Memeriksa apakah wallet address adalah '0x000F'
-        if ($walletAddress !== '0x000F') {
-            // Jika wallet address bukan '0x000F', maka kurangi left_token_amount
-            LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
+            return view('checkout.success'); // Tampilkan halaman sukses
+
+        } catch (\Exception $e) {
+            // Tangkap error dan tampilkan halaman error
+            return view('errors.payment_error', ['message' => $e->getMessage()]);
         }
-
-
-        return view('checkout.success'); // Tampilkan halaman sukses
     }
 
     public function checkoutCancel()
