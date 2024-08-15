@@ -74,11 +74,44 @@
     <!------------------------------>
     <!--- Hero Banner Start--------->
     <!------------------------------>
+
     <section class="hero-banner position-relative overflow-hidden">
         <div class="container">
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @if (session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger" role="alert">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row d-flex flex-wrap align-items-center">
+
                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="position-relative left-hero-color">
+                        <!-- Modal Structure -->
+
                         <h1 class="mb-0 fw-bold">
                             Royal Coins is the future of digital currency.
                         </h1>
@@ -97,6 +130,21 @@
                                     @csrf
                                     <p class="badge bg-warning">1 RoyalCoins = ${{ $price }}</p>
                                     <p class="badge bg-info">Use Solana wallet address</p>
+                                    <hr>
+                                    <!-- Pilihan Mata Uang -->
+                                    <div class="mb-3 text-center">
+                                        <label class="form-label">Select Currency:</label><br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="currency"
+                                                id="currencyUSD" value="usd" checked>
+                                            <label class="form-check-label" for="currencyUSD">USD</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="currency"
+                                                id="currencyEUR" value="eur">
+                                            <label class="form-check-label" for="currencyEUR">EUR</label>
+                                        </div>
+                                    </div>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-white"><i class="bi bi-wallet2"></i></span>
@@ -107,7 +155,7 @@
                                         <span class="input-group-text bg-white"><i
                                                 class="bi bi-currency-dollar"></i></span>
                                         <input type="text" class="form-control" id="usdAmount" name="usdAmount"
-                                            placeholder="Amount in USD" onkeyup="formatAndConvertToRoyalCoins()"
+                                            placeholder="Amount in USD/EUR" onkeyup="checkMaxValueAndConvert()"
                                             required>
                                     </div>
 
@@ -129,11 +177,11 @@
 
                                 <hr>
 
-                                Total Token : <b> 1.000.000 </b> <br>
-                                Token Left : <b>{{ number_format($totalLeftToken, 0) }}
-                                </b>
+                                Total Token : <b>1,000,000</b> <br>
+                                Token Left : <b>{{ number_format($totalLeftToken, 0) }}</b>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -299,7 +347,8 @@
                             </p>
                         </div>
                         <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
-                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled" disabled>Buy
+                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled"
+                                disabled>Buy
                                 Now</a>
                         </div>
                     </div>
@@ -319,7 +368,8 @@
 
                         </div>
                         <div class="card-action text-center pb-xxl-5 pb-xl-5 pb-lg-5 pb-md-4 pb-sm-4 pb-4">
-                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled" disabled>Buy
+                            <a href="#" class="btn btn-secondary btn-hover-secondery text-capitalize disabled"
+                                disabled>Buy
                                 Now</a>
                         </div>
                     </div>
@@ -483,21 +533,18 @@
                                     placeholder="Receive Address" required>
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text bg-white"><i
-                                        class="bi bi-currency-dollar"></i></span>
+                                <span class="input-group-text bg-white"><i class="bi bi-currency-dollar"></i></span>
                                 <input type="text" class="form-control" id="usdAmount2" name="usdAmount"
-                                    placeholder="Amount in USD" onkeyup="formatAndConvertToRoyalCoins2()"
-                                    required>
+                                    placeholder="Amount in USD" onkeyup="formatAndConvertToRoyalCoins2()" required>
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text bg-white"><img src="/img/royalcoin.png"
-                                        width="20" alt=""></span>
+                                <span class="input-group-text bg-white"><img src="/img/royalcoin.png" width="20"
+                                        alt=""></span>
                                 <input type="text" class="form-control bg-white" id="royalCoinAmount2"
                                     placeholder="RoyalCoins" readonly>
                             </div>
-                            <input type="hidden" name="royalCoinAmount" id="hiddenRoyalCoinAmount2"
-                                value="0">
+                            <input type="hidden" name="royalCoinAmount" id="hiddenRoyalCoinAmount2" value="0">
                             <button type="submit" class="btn btn-warning btn-block w-100">Buy <span
                                     id="royalCoinAmountDisplay2">0</span> RoyalCoins</button>
                         </form>
@@ -559,20 +606,34 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        function formatAndConvertToRoyalCoins() {
+        function checkMaxValueAndConvert() {
+            const maxAmount = 999999;
             const usdAmountInput = document.getElementById('usdAmount');
-            let usdAmount = usdAmountInput.value.replace(/,/g, ''); // Remove commas for calculation
+            let usdAmount = parseFloat(usdAmountInput.value.replace(/,/g, ''));
+
+            if (usdAmount > maxAmount) {
+                alert('The maximum allowed amount is 999,999.');
+                usdAmount = maxAmount;
+            }
 
             // Format the USD amount with commas
             usdAmountInput.value = formatNumber(usdAmount);
 
-            // Calculate RoyalCoins
-            const conversionRate = {{ $price }}; // 1 RoyalCoin = $5000
+            // Call the conversion function to calculate and display RoyalCoins
+            formatAndConvertToRoyalCoins(usdAmount);
+        }
+
+        function formatAndConvertToRoyalCoins(usdAmount) {
+            const conversionRate = {{ $price }}; // Conversion rate for RoyalCoins
             const royalCoinAmount = (usdAmount / conversionRate).toFixed(4);
 
             document.getElementById('royalCoinAmount').value = royalCoinAmount;
             document.getElementById('hiddenRoyalCoinAmount').value = royalCoinAmount;
             document.getElementById('royalCoinAmountDisplay').textContent = royalCoinAmount;
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
         function formatAndConvertToRoyalCoins2() {
@@ -590,6 +651,12 @@
             document.getElementById('hiddenRoyalCoinAmount2').value = royalCoinAmount;
             document.getElementById('royalCoinAmountDisplay2').textContent = royalCoinAmount;
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('error') || $errors->any())
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+            @endif
+        });
     </script>
 
 </body>

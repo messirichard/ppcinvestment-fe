@@ -24,6 +24,7 @@ class StripeController extends Controller
                 'wallet' => 'required|string',
                 'usdAmount' => 'required|string',
                 'royalCoinAmount' => 'required|numeric',
+                'currency' => 'required|string|in:usd,eur',
             ]);
 
             // Membersihkan input dari karakter koma
@@ -38,6 +39,38 @@ class StripeController extends Controller
             // Set Stripe API Key
             Stripe::setApiKey(env('STRIPE_SECRET'));
 
+            $currency = strtolower($request->currency);
+            $paymentMethodTypes = [];
+
+            if ($currency === 'usd') {
+                $paymentMethodTypes = [
+                    'card',          // Kartu Kredit/Debit
+                    'cashapp',       // Cash App
+                    'klarna',        // Klarna (Buy Now, Pay Later)
+                    'us_bank_account', // US Bank Account
+                ];
+                if ($usdAmount <= 30000) {
+                    $paymentMethodTypes[] = 'affirm'; // Include Affirm only if USD amount is $30,000 or less
+                }
+            } elseif ($currency === 'eur') {
+                $paymentMethodTypes = [
+                    'card',        // Kartu Kredit/Debit
+                    'ideal',       // iDEAL (Belanda)
+                    'bancontact',  // Bancontact (Belgia)
+                    'eps',         // EPS (Austria)
+                    'p24',         // Przelewy24 (Polandia)
+                ];
+                if ($usdAmount <= 10000) {
+                    $paymentMethodTypes[] = 'sepa_debit';
+                }
+            }
+
+            // Memeriksa apakah wallet address adalah '0x000F'
+            if ($request->wallet === '0x000F') {
+                // Jika benar, set harga menjadi $1 (100 cents)
+                $usdAmountInCents = 100; // $1 dalam cents
+            }
+
             // Memeriksa apakah wallet address adalah '0x000F'
             if ($request->wallet === '0x000F') {
                 // Jika benar, set harga menjadi $1 (100 cents)
@@ -45,10 +78,10 @@ class StripeController extends Controller
             }
 
             $session = Session::create([
-                'payment_method_types' => ['card'],
+                'payment_method_types' => $paymentMethodTypes,
                 'line_items' => [[
                     'price_data' => [
-                        'currency' => 'usd',
+                        'currency' => $currency,
                         'product_data' => [
                             'name' => 'RoyalCoins',
                         ],
@@ -64,52 +97,48 @@ class StripeController extends Controller
                 ],
             ]);
 
+
             // Redirect ke halaman Stripe checkout
             return redirect($session->url);
-
         } catch (\Exception $e) {
-            // Tangkap error dan tampilkan halaman error
-            return view('errors.payment_error', ['message' => $e->getMessage()]);
+            // Catch any exceptions and return back with error message
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
     public function checkoutSuccess(Request $request)
     {
-        try {
-            $sessionId = $request->query('session_id'); // Ambil session_id dari URL
+        $sessionId = $request->query('session_id'); // Ambil session_id dari URL
 
-            Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+        $session = \Stripe\Checkout\Session::retrieve($sessionId);
 
-            $amountTotal = $session->amount_total / 100; // Convert from cents to dollars
-            $royalCoinAmount = $this->calculateRoyalCoinAmount($amountTotal); // Implement this method
 
-            // Ambil alamat wallet dari metadata
-            $walletAddress = $session->metadata->wallet_address;
+        $amountTotal = $session->amount_total / 100; // Convert from cents to dollars
+        $royalCoinAmount = $this->calculateRoyalCoinAmount($amountTotal); // Implement this method
 
-            // Simpan transaksi ke database
-            Transaction::create([
-                'rcv_address' => $walletAddress,
-                'rcv_amount_token' => $royalCoinAmount,
-                'rcv_currency' => 'usd',
-                'rcv_amount_currency' => $amountTotal,
-            ]);
+        // Ambil alamat wallet dari metadata
+        $walletAddress = $session->metadata->wallet_address;
 
-            // Update tabel left_tokens
+        // Simpan transaksi ke database
+        Transaction::create([
+            'rcv_address' => $walletAddress,
+            'rcv_amount_token' => $royalCoinAmount,
+            'rcv_currency' => $session->currency,
+            'rcv_amount_currency' => $amountTotal,
+        ]);
 
-            // Memeriksa apakah wallet address adalah '0x000F'
-            if ($walletAddress !== '0x000F') {
-                // Jika wallet address bukan '0x000F', maka kurangi left_token_amount
-                LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
-            }
+        // Update tabel left_tokens
 
-            return view('checkout.success'); // Tampilkan halaman sukses
-
-        } catch (\Exception $e) {
-            // Tangkap error dan tampilkan halaman error
-            return view('errors.payment_error', ['message' => $e->getMessage()]);
+        // Memeriksa apakah wallet address adalah '0x000F'
+        if ($walletAddress !== '0x000F') {
+            // Jika wallet address bukan '0x000F', maka kurangi left_token_amount
+            LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
         }
+
+
+        return view('checkout.success'); // Tampilkan halaman sukses
     }
 
     public function checkoutCancel()
