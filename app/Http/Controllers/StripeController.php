@@ -37,7 +37,15 @@ class StripeController extends Controller
         // Set Stripe API Key
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // Buat session Stripe untuk pembayaran
+        // Mengatur nilai default untuk amount dalam cents
+        $usdAmountInCents = 1000; // Misalnya $10
+
+        // Memeriksa apakah wallet address adalah '0x000F'
+        if ($request->wallet === '0x000F') {
+            // Jika benar, set harga menjadi $1 (100 cents)
+            $usdAmountInCents = 100; // $1 dalam cents
+        }
+
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -57,6 +65,7 @@ class StripeController extends Controller
                 'wallet_address' => $request->wallet, // Menyimpan alamat wallet dalam metadata
             ],
         ]);
+
 
         // Redirect ke halaman Stripe checkout
         return redirect($session->url);
