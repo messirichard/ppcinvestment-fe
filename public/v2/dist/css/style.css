@@ -17,6 +17,29 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+/* Hide the actual radio buttons */
+.form-check-input {
+    display: none; /* Hide actual radio buttons */
+}
+.form-check-label {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+.form-check-label.btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+    background-color: transparent;
+}
+.form-check-input:checked + .form-check-label {
+    color: #fff;
+    background-color: #007bff; /* Background color for selected state */
+    border-color: #007bff;
+}
 
 
  body {
