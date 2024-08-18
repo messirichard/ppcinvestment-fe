@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel_app_dev
+    container_name: laravel_app_dev
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html:delegated
+    networks:
+      - app-network
+
+  artisan_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel_app_dev
+    container_name: laravel_artisan_dev
+    working_dir: /var/www/html
+    entrypoint: ["php", "/var/www/html/artisan"]
+    volumes:
+      - .:/var/www/html
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
