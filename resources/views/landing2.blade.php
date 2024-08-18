@@ -16,9 +16,7 @@
 </head>
 
 <body>
-    <!------------------------------>
-    <!-- Header Start -->
-    <!------------------------------>
+
     <header class="main-header position-fixed w-100">
         <div class="container">
             <nav class="navbar navbar-expand-xl py-0">
@@ -77,12 +75,14 @@
 
     <section class="hero-banner position-relative overflow-hidden">
         <div class="container">
-            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" data-bs-backdrop="false">
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true"
+                data-bs-backdrop="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             @if (session('error'))
@@ -134,15 +134,31 @@
                                     <!-- Pilihan Mata Uang -->
                                     <div class="mb-3 text-center">
                                         <label class="form-label">Select Currency:</label><br>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="currency"
-                                                id="currencyUSD" value="usd" checked>
-                                            <label class="form-check-label" for="currencyUSD">USD</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="currency"
-                                                id="currencyEUR" value="eur">
-                                            <label class="form-check-label" for="currencyEUR">EUR</label>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="currency"
+                                                        id="currencyCRYPTO" value="crypto" checked>
+                                                    <label class="form-check-label btn btn-outline-primary"
+                                                        for="currencyCRYPTO">CRYPTO</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="currency"
+                                                        id="currencyUSD" value="usd">
+                                                    <label class="form-check-label btn btn-outline-primary"
+                                                        for="currencyUSD">USD</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="currency"
+                                                        id="currencyEUR" value="eur">
+                                                    <label class="form-check-label btn btn-outline-primary"
+                                                        for="currencyEUR">EUR</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -154,7 +170,7 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-white"><i
                                                 class="bi bi-currency-dollar"></i></span>
-                                        <input type="text" class="form-control" id="usdAmount" name="usdAmount"
+                                        <input type="text" class="form-control" id="amount" name="usdAmount"
                                             placeholder="Amount in USD/EUR" onkeyup="checkMaxValueAndConvert()"
                                             required>
                                     </div>
@@ -163,7 +179,7 @@
                                         <span class="input-group-text bg-white"><img src="/img/royalcoin.png"
                                                 width="20" alt=""></span>
                                         <input type="text" class="form-control bg-white" id="royalCoinAmount"
-                                            placeholder="RoyalCoins" readonly>
+                                            placeholder="RoyalCoins">
                                     </div>
                                     <input type="hidden" name="royalCoinAmount" id="hiddenRoyalCoinAmount"
                                         value="0">
@@ -602,55 +618,111 @@
     <script src="/v2/dist/js/custom.js"></script>
 
     <script>
+        const usdToRoyalCoinRate = <?php echo json_encode($price); ?>;
+        let eurConversionRate = null; // Variable to hold the EUR conversion rate
+
+        async function fetchEurConversionRate() {
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                const data = await response.json();
+                eurConversionRate = data.rates.EUR; // Get EUR conversion rate
+                console.log(`EUR Conversion Rate: ${eurConversionRate}`);
+            } catch (error) {
+                console.error('Error fetching EUR conversion rate:', error);
+                eurConversionRate = 1; // Fallback rate if API fails
+            }
+        }
+
+        fetchEurConversionRate();
+
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
         function checkMaxValueAndConvert() {
             const maxAmount = 999999;
-            const usdAmountInput = document.getElementById('usdAmount');
-            let usdAmount = parseFloat(usdAmountInput.value.replace(/,/g, ''));
+            const amountInput = document.getElementById('amount');
+            let amount = parseFloat(amountInput.value.replace(/,/g, ''));
 
-            if (usdAmount > maxAmount) {
+            if (amount > maxAmount) {
                 alert('The maximum allowed amount is 999,999.');
-                usdAmount = maxAmount;
+                amount = maxAmount;
             }
 
-            // Format the USD amount with commas
-            usdAmountInput.value = formatNumber(usdAmount);
+            // Format the amount with commas
+            amountInput.value = formatNumber(amount);
 
             // Call the conversion function to calculate and display RoyalCoins
-            formatAndConvertToRoyalCoins(usdAmount);
+            formatAndConvertToRoyalCoins();
         }
 
-        function formatAndConvertToRoyalCoins(usdAmount) {
-            const conversionRate = {{ $price }}; // Conversion rate for RoyalCoins
-            const royalCoinAmount = (usdAmount / conversionRate).toFixed(4);
+        function formatAndConvertToRoyalCoins() {
+            const amountInput = document.getElementById('amount');
+            let amount = parseFloat(amountInput.value.replace(/,/g, ''));
+
+            if (isNaN(amount)) {
+                amountInput.value = "";
+                document.getElementById('royalCoinAmount').value = "";
+                document.getElementById('hiddenRoyalCoinAmount').value = "";
+                document.getElementById('royalCoinAmountDisplay').textContent = "";
+                return;
+            }
+
+            const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
+            let conversionRate;
+
+            if (selectedCurrency === 'eur' && eurConversionRate !== null) {
+                conversionRate = usdToRoyalCoinRate * eurConversionRate;
+            } else {
+                conversionRate = usdToRoyalCoinRate;
+            }
+
+            amountInput.value = formatNumber(amount);
+
+            let royalCoinAmount = (amount / conversionRate).toFixed(4);
 
             document.getElementById('royalCoinAmount').value = royalCoinAmount;
             document.getElementById('hiddenRoyalCoinAmount').value = royalCoinAmount;
             document.getElementById('royalCoinAmountDisplay').textContent = royalCoinAmount;
         }
 
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        function formatAndConvertToCurrency() {
+            const royalCoinInput = document.getElementById('royalCoinAmount');
+            let royalCoinAmount = parseFloat(royalCoinInput.value.replace(/,/g, ''));
+
+            if (isNaN(royalCoinAmount)) {
+                royalCoinInput.value = "";
+                document.getElementById('amount').value = "";
+                document.getElementById('hiddenRoyalCoinAmount').value = "";
+                return;
+            }
+
+            const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
+            let conversionRate;
+
+            if (selectedCurrency === 'eur' && eurConversionRate !== null) {
+                conversionRate = usdToRoyalCoinRate * eurConversionRate;
+            } else {
+                conversionRate = usdToRoyalCoinRate;
+            }
+
+            let amount = (royalCoinAmount * conversionRate).toFixed(2);
+
+            document.getElementById('amount').value = formatNumber(amount);
+            document.getElementById('hiddenRoyalCoinAmount').value = royalCoinAmount;
         }
 
-        function formatAndConvertToRoyalCoins2() {
-            const usdAmountInput = document.getElementById('usdAmount2');
-            let usdAmount = usdAmountInput.value.replace(/,/g, ''); // Remove commas for calculation
+        document.querySelectorAll('input[name="currency"]').forEach((radio) => {
+            radio.addEventListener('change', () => {
+                checkMaxValueAndConvert(); // Recalculate when currency changes
+            });
+        });
 
-            // Format the USD amount with commas
-            usdAmountInput.value = formatNumber(usdAmount);
+        document.getElementById('royalCoinAmount').addEventListener('keyup', formatAndConvertToCurrency);
 
-            // Calculate RoyalCoins
-            const conversionRate = {{ $price }}; // 1 RoyalCoin = $5000
-            const royalCoinAmount = (usdAmount / conversionRate).toFixed(4);
-
-            document.getElementById('royalCoinAmount2').value = royalCoinAmount;
-            document.getElementById('hiddenRoyalCoinAmount2').value = royalCoinAmount;
-            document.getElementById('royalCoinAmountDisplay2').textContent = royalCoinAmount;
-        }
         document.addEventListener('DOMContentLoaded', function() {
             @if (session('error') || $errors->any())
                 var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));

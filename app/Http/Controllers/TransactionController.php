@@ -11,7 +11,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::all(); // Atau gunakan query sesuai kebutuhan
+        $transactions = Transaction::orderBy('created_at', 'DESC')->get();
         return view('transak', compact('transactions'));
     }
 
