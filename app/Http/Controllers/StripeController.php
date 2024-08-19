@@ -51,9 +51,6 @@ class StripeController extends Controller
                     'klarna',        // Klarna (Buy Now, Pay Later)
                     'us_bank_account', // US Bank Account
                 ];
-                if ($usdAmount <= 30000) {
-                    $paymentMethodTypes[] = 'affirm'; // Include Affirm only if USD amount is $30,000 or less
-                }
             } elseif ($currency === 'eur') {
                 $paymentMethodTypes = [
                     'card',        // Kartu Kredit/Debit
