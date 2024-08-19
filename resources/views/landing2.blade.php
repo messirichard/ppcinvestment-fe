@@ -84,7 +84,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="errorModalBody">
                             @if (session('error'))
                                 <div class="alert alert-danger" role="alert">
                                     {{ session('error') }}
@@ -643,12 +643,30 @@
         }
 
         function checkMaxValueAndConvert() {
-            const maxAmount = 999999;
+            const maxAmountUSDandEUR = 999999;
+            const maxAmountCrypto = 90000000;
             const amountInput = document.getElementById('amount');
             let amount = parseFloat(amountInput.value.replace(/,/g, ''));
 
+            const selectedCurrency = document.querySelector('input[name="currency"]:checked').value;
+
+            let maxAmount = maxAmountUSDandEUR; // Default to maxAmountUSDandEUR
+
+            if (selectedCurrency === 'crypto') {
+                maxAmount = maxAmountCrypto; // Use maxAmountCrypto for crypto
+            }
+
             if (amount > maxAmount) {
-                alert('The maximum allowed amount is 999,999.');
+                // Set the error message in the modal
+                const errorModalBody = document.getElementById('errorModalBody');
+                errorModalBody.textContent =
+                    `The maximum allowed amount for ${selectedCurrency.toUpperCase()} is ${formatNumber(maxAmount)}.`;
+
+                // Show the error modal
+                const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+
+                // Set amount to max amount
                 amount = maxAmount;
             }
 
