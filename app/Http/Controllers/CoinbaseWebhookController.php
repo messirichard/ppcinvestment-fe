@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LeftToken;
 use Illuminate\Http\Request;
 use App\Models\CoinbaseTransaction;
 use Illuminate\Support\Facades\Log;
@@ -11,7 +12,7 @@ class CoinbaseWebhookController extends Controller
     public function handleWebhook(Request $request)
     {
         // Ambil header signature dari request
-        $signature = $request->header('X-Signature');
+        $signature = $request->header('X-CC-Webhook-Signature');
         $webhookSecret = env('COINBASE_WEBHOOK_SECRET');
 
         // Verifikasi signature
@@ -29,17 +30,18 @@ class CoinbaseWebhookController extends Controller
         // Proses event berdasarkan jenis event
         $eventType = $payload['event']['type'];
         $eventData = $payload['event']['data'];
+        $tokenLeftAmount = $eventData['id']['metadata']['token_amount'];
 
         switch ($eventType) {
             case 'charge:confirmed':
-                $this->handleChargeConfirmed($eventData);
+                $this->handleChargeConfirmed($eventData, $tokenLeftAmount);
                 break;
 
             case 'charge:failed':
                 $this->handleChargeFailed($eventData);
                 break;
 
-            // Tambahkan kasus lain jika diperlukan
+                // Tambahkan kasus lain jika diperlukan
 
             default:
                 Log::warning('Unhandled event type: ' . $eventType);
@@ -57,13 +59,14 @@ class CoinbaseWebhookController extends Controller
         return hash_equals($computedSignature, $signature);
     }
 
-    private function handleChargeConfirmed($eventData)
+    private function handleChargeConfirmed($eventData, $royalCoinAmount)
     {
         // Implementasikan logika untuk menangani charge yang dikonfirmasi
         CoinbaseTransaction::where('coinbase_charge_id', $eventData['id'])
             ->update([
                 'status' => 'confirmed'
             ]);
+        LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
     }
 
     private function handleChargeFailed($eventData)

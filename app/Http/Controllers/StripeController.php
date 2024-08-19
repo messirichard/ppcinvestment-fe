@@ -77,7 +77,8 @@ class StripeController extends Controller
                         "currency" => 'USD'
                     ],
                     "metadata" => [
-                        "wallet_address" => $request->wallet // Menyimpan alamat wallet dalam metadata
+                        "wallet_address" => $request->wallet, // Menyimpan alamat wallet dalam metadata
+                        "token_amount" => $request->royalCoinAmount
                     ],
                     "redirect_url" => route('checkout.success') . '?session_id=coinbase',
                     "cancel_url" => route('checkout.cancel'),
