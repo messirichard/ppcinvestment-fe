@@ -73,7 +73,7 @@ class StripeController extends Controller
                     "description" => "Purchase of RoyalCoins",
                     "pricing_type" => "fixed_price",
                     "local_price" => [
-                        "amount" => number_format($usdAmount, 2), // Jumlah dalam USD
+                        "amount" => $usdAmount.'.00', // Jumlah dalam USD
                         "currency" => 'USD'
                     ],
                     "metadata" => [
