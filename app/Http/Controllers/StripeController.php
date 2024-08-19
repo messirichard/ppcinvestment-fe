@@ -11,8 +11,10 @@ use App\Models\TokenPrice;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
+use App\Models\CoinbaseTransaction;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class StripeController extends Controller
 {
@@ -24,7 +26,7 @@ class StripeController extends Controller
                 'wallet' => 'required|string',
                 'usdAmount' => 'required|string',
                 'royalCoinAmount' => 'required|numeric',
-                'currency' => 'required|string|in:usd,eur',
+                'currency' => 'required|string|in:usd,eur,crypto',
             ]);
 
             // Membersihkan input dari karakter koma
@@ -63,6 +65,61 @@ class StripeController extends Controller
                 if ($usdAmount <= 10000) {
                     $paymentMethodTypes[] = 'sepa_debit';
                 }
+            } elseif ($currency === 'crypto') {
+
+                // URL API Coinbase Commerce
+                $url = 'https://api.commerce.coinbase.com/charges/';
+
+                // Data yang akan dikirim (dalam bentuk array)
+                $data = [
+                    "name" => "RoyalCoins Purchase",
+                    "description" => "Purchase of RoyalCoins",
+                    "pricing_type" => "fixed_price",
+                    "local_price" => [
+                        "amount" => number_format($usdAmount, 2), // Jumlah dalam USD
+                        "currency" => 'USD'
+                    ],
+                    "metadata" => [
+                        "wallet_address" => $request->wallet // Menyimpan alamat wallet dalam metadata
+                    ],
+                    "redirect_url" => route('checkout.success') . '?session_id=coinbase',
+                    "cancel_url" => route('checkout.cancel'),
+                ];
+
+                // Encode data ke JSON
+                $jsonData = json_encode($data);
+
+                // API Key Coinbase Commerce Anda
+                $apiKey = env('COINBASE_API_KEY');
+
+                // Kirim permintaan POST ke Coinbase Commerce
+                $response = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                    'X-CC-Api-Key' => $apiKey
+                ])->post($url, $data);
+
+                // Cek jika ada error
+                if ($response->failed()) {
+                    return response()->json(['error' => 'Failed to create charge'], 500);
+                }
+
+                // Ambil data dari respons
+                $responseData = $response->json();
+                $chargeId = $responseData['data']['id'];
+                $checkoutUrl = $responseData['data']['hosted_url'];
+
+                // Simpan data transaksi ke database
+                CoinbaseTransaction::create([
+                    'name' => $data['name'],
+                    'description' => $data['description'],
+                    'amount' => $usdAmount,
+                    'currency' => $currency,
+                    'coinbase_charge_id' => $chargeId,
+                    'wallet_address' => $request->wallet,
+                ]);
+
+                // Redirect ke URL checkout Coinbase Commerce
+                return redirect($checkoutUrl);
             }
 
             // Memeriksa apakah wallet address adalah '0x000F'
@@ -110,13 +167,31 @@ class StripeController extends Controller
     {
         $sessionId = $request->query('session_id'); // Ambil session_id dari URL
 
+        if($sessionId === 'coinbase') {
+            return view('checkout.success');
+        }
+
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
+        // Ambil informasi sesi dari Stripe
         $session = \Stripe\Checkout\Session::retrieve($sessionId);
 
+        // Convert amount from cents to dollars or euros
+        $amountTotal = $session->amount_total / 100;
 
-        $amountTotal = $session->amount_total / 100; // Convert from cents to dollars
-        $royalCoinAmount = $this->calculateRoyalCoinAmount($amountTotal); // Implement this method
+        // Cek mata uang yang digunakan (USD atau EUR)
+        $currency = strtoupper($session->currency);
+        $royalCoinAmount = 0;
+
+        if ($currency === 'USD') {
+            // Jika mata uang adalah USD, langsung hitung RoyalCoins
+            $royalCoinAmount = $this->calculateRoyalCoinAmount($amountTotal);
+        } elseif ($currency === 'EUR') {
+            // Jika mata uang adalah EUR, konversi ke USD terlebih dahulu
+            $eurToUsdRate = $this->getEurToUsdRate();
+            $amountInUsd = $amountTotal * $eurToUsdRate;
+            $royalCoinAmount = $this->calculateRoyalCoinAmount($amountInUsd);
+        }
 
         // Ambil alamat wallet dari metadata
         $walletAddress = $session->metadata->wallet_address;
@@ -125,31 +200,38 @@ class StripeController extends Controller
         Transaction::create([
             'rcv_address' => $walletAddress,
             'rcv_amount_token' => $royalCoinAmount,
-            'rcv_currency' => $session->currency,
+            'rcv_currency' => $currency,
             'rcv_amount_currency' => $amountTotal,
         ]);
 
         // Update tabel left_tokens
-
         // Memeriksa apakah wallet address adalah '0x000F'
         if ($walletAddress !== '0x000F') {
             // Jika wallet address bukan '0x000F', maka kurangi left_token_amount
             LeftToken::query()->decrement('left_token_amount', $royalCoinAmount);
         }
 
-
         return view('checkout.success'); // Tampilkan halaman sukses
+    }
+
+    private function calculateRoyalCoinAmount($usdAmount)
+    {
+        // Dapatkan harga token dari tabel TokenPrice
+        $price = TokenPrice::sum('price'); // Harga RoyalCoin dalam USD
+        return $usdAmount / $price;
+    }
+
+    private function getEurToUsdRate()
+    {
+        // Mengambil kurs EUR ke USD dari ExchangeRate-API
+        $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+        $rates = $response->json()['rates'];
+
+        return $rates['EUR']; // Mengembalikan kurs EUR ke USD
     }
 
     public function checkoutCancel()
     {
         return view('checkout.cancel');
-    }
-
-    private function calculateRoyalCoinAmount($usdAmount)
-    {
-        // Misalkan 1 RoyalCoin = $5000
-        $price = TokenPrice::sum('price');
-        return $usdAmount / $price;
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CoinbaseWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,4 @@ Route::post('/checkout', [StripeController::class, 'handleCheckout'])->name('che
 Route::get('/checkout/success', [StripeController::class, 'checkoutSuccess'])->name('checkout.success');
 Route::get('/checkout/cancel', [StripeController::class, 'checkoutCancel'])->name('checkout.cancel');
 
+Route::post('/webhook/coinbase', [CoinbaseWebhookController::class, 'handleWebhook'])->name('coinbase.webhook');
